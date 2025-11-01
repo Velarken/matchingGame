@@ -1,0 +1,10 @@
+.cardFace {
+    border:2px solid red;
+    width:1fr;
+    height:1fr;
+    margin:1vw;
+}
+.cardFace:hover {
+    scale: 1.25;
+    border:4px solid white;
+}
