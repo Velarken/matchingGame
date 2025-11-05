@@ -4,6 +4,7 @@ import {StartPage} from './pages/StartPage.jsx'
 import {GameboardPage} from './pages/GameboardPage'
 import {Footer} from './components/Footer.jsx'
 import {LoadingPage} from './pages/LoadingPage.jsx'
+import characters from './characters.js'
 
 function App() {
   const [isLoadingOver,setIsLoadingOver] = useState(false);
@@ -12,8 +13,12 @@ function App() {
   const [charactersToDisplay,setCharactersToDisplay] = useState([])
   const [score,setScore] = useState(0);
   const [bestScore,setBestScore] = useState(0);
+  const [isSoundPlaying,setIsSoundPlaying] = useState(true)
+  const [isMusicPlaying,setIsMusicPlaying] = useState(false)
 
   useEffect(() => {
+    // determines how long the loading screen is shown for
+    // when timeout ends, setIsLoadingOver state is updated, and game menu is shown
     setTimeout(() => {
       setIsLoadingOver(true)
     }, 1500);
@@ -25,7 +30,13 @@ function App() {
       character.clicked = false;
     })
   }
+  const playClick = () => {
+    if (isSoundPlaying) {
+      const audio = new Audio()
+    }
+  }
   const getCharactersToPlayWith = () => {
+    // create array of characters to play with based on the difficulty selected
     let randomCharacters = [];
     while (randomCharacters.length < difficultyLevel[0]) {
       const randomNumber = Math.floor(Math.random()*10);
@@ -33,10 +44,12 @@ function App() {
         randomCharacters.push(characters[randomNumber]);
       }
     }
+    // randomize chosen characters
     setCharactersToPlayWith(randomCharacters);
     shuffle(randomCharacters)
   }
   const shuffle = (array) => {
+    // randomize the order of the character array
     let shuffledCharacters = [];
     let clicked = 0;
 
@@ -51,12 +64,14 @@ function App() {
     }
   }
   const countScore = () => {
+    // updates player score based on successful game
     setScore(score + 1)
     if (score >= bestScore) {
       setBestScore(bestScore + 1)
     }
   }
   const decideRoundResult = (character) => {
+    // determine if card selection was valid for continued play
     if (character.clicked) {
       return 'lose'
     }
@@ -90,13 +105,16 @@ function App() {
             setBestScore={setBestScore}
             countScore={countScore}
             decideRoundResult={decideRoundResult}
+            isSoundPlaying={isSoundPlaying}
+            isMusicPlaying={isMusicPlaying}
+            playClick={playClick}
           />}
           <Footer
-            isMusicPlaying={isMusicPlaying}
+            /* isMusicPlaying={isMusicPlaying}
             setIsMusicPlaying={setIsMusicPlaying}
             isSoundPlaying={isSoundPlaying}
             setIsSoundPlaying={setIsSoundPlaying}
-            playClick={playClick}
+            playClick={playClick} */
           />
       </>
       )}

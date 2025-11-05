@@ -1,10 +1,16 @@
 import {useState,useEffect} from 'react'
+import {Header} from '../components/Header.jsx'
+import {Card} from '../components/Card.jsx'
+import {GameOver} from '../components/GameOver.jsx'
+import {motion, AnimatePresence} from 'motion/react'
+import '../GameboardPage.css'
+
 export function GameboardPage({
     goToStartPage,
+    playClick,
+    playFlip,
     getCharactersToPlayWith,
     setCharactersToPlayWith,
-    getCharactersToDisplay,
-    setCharactersToDisplay,
     charactersToPlayWith,
     charactersToDisplay,
     shuffle,
@@ -66,7 +72,41 @@ export function GameboardPage({
     }
     return (
         <>
-        
+            <Header
+                goToStartPage={goToStartPage}
+                playClick={playClick}
+                score={score}
+                bestScore={bestScore}
+            />
+            <motion.div
+                className='playSpace'
+                initial={{Scale:0}}
+                animate={{scale:1}}
+                transition={{duration:0.5}}
+            >
+                <div className="cardSection">
+                    {charactersToDisplay.map(character => {
+                        return (
+                            <Card
+                                key={character.id}
+                                playClick={playClick}
+                                character={character}
+                                img={character.src}
+                                isFlipped={isFlipped}
+                                handleCardClick={handleCardClick}/>
+                        );
+                    })}
+                </div>
+                <div className="remainIndicator">{`${score} / ${charactersToPlayWith.length}`}</div>
+            </motion.div>
+            <AnimatePresence>
+                {result !== '' &&
+                    <GameOver
+                        restartGame={restartGame}
+                        playClick={playClick}
+                        result={result}/>
+                }
+            </AnimatePresence>
         </>
     )
 }
