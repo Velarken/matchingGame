@@ -1,0 +1,24 @@
+.card {
+    display:flex;
+    flex-direction: column;
+    margin:3vw;
+    height:20vh;
+    border:2px solid blue
+}
+.cardFace {
+    display:flex;
+    flex-direction:column;
+    height:20vh;
+    width:10vw;
+}
+
+.characterDisplay {
+    display:flex;
+    height:100%;
+    width:100px;
+    align-items: center;
+    justify-content: center;
+}
+.name {
+    text-align: center;
+}
