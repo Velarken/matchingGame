@@ -1,5 +1,6 @@
 import {motion} from 'motion/react'
 import logo from '../assets/logo.png'
+import startSound from '../assets/game_start.mp3'
 export function StartPage({setDifficultyLevel,playClick}) {
     const variants = {
         hidden: {scale:0},
@@ -7,6 +8,10 @@ export function StartPage({setDifficultyLevel,playClick}) {
             scale:1,
             transition: {duration:0.5}
         }
+    }
+    function handlePlaySound() {
+        let audio = new Audio(startSound)
+        audio.play();
     }
     return (
         <>
@@ -32,17 +37,17 @@ export function StartPage({setDifficultyLevel,playClick}) {
                     animate='visible'
                 >
                     <button onClick={() => {
-                        setDifficultyLevel([5,3])
-                        playClick();
+                        handlePlaySound();                        
+                        setDifficultyLevel([5,3]);
                     }}
                     >Easy</button>
                     <button onClick={() => {
+                        handlePlaySound();
                         setDifficultyLevel([7,4]);
-                        playClick();
                     }}>Medium</button>
                     <button onClick={() => {
+                        handlePlaySound();
                         setDifficultyLevel([10,5]);
-                        playClick();
                     }}>Hard</button>
                 </motion.div>
             </div>
