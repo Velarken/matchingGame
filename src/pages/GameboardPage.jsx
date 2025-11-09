@@ -1,9 +1,9 @@
-import {useState,useEffect} from 'react'
-import {Header} from '../components/Header.jsx'
-import {Card} from '../components/Card.jsx'
-import {GameOver} from '../components/GameOver.jsx'
-import {motion, AnimatePresence} from 'motion/react'
-import '../GameboardPage.css'
+import {useState,useEffect} from 'react';
+import {motion, AnimatePresence} from 'motion/react';
+import {Header} from '../components/Header.jsx';
+import {Card} from '../components/Card.jsx';
+import {GameOver} from '../components/GameOver.jsx';
+import '../GameboardPage.css';
 
 export function GameboardPage({
     goToStartPage,
@@ -60,7 +60,7 @@ export function GameboardPage({
             setIsFlipped(false);
             setIsClicked(false);
             turnResult = '';
-        }, 1300)
+        }, 1000)
     }
     const restartGame = () => {
         setScore(0);
