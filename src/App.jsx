@@ -2,9 +2,11 @@ import { useState,useEffect } from 'react'
 import './App.css'
 import {StartPage} from './pages/StartPage.jsx'
 import {GameboardPage} from './pages/GameboardPage'
-import {Footer} from './components/Footer.jsx'
+// import {Footer} from './components/Footer.jsx'
 import {LoadingPage} from './pages/LoadingPage.jsx'
 import characters from './characters.js'
+import Sound from './components/Sound.jsx'
+import backgroundMusic from './assets/backgroundMusic.mp3'
 
 function App() {
   const [isLoadingOver,setIsLoadingOver] = useState(false);
@@ -14,7 +16,8 @@ function App() {
   const [score,setScore] = useState(0);
   const [bestScore,setBestScore] = useState(0);
   const [isSoundPlaying,setIsSoundPlaying] = useState(true)
-  const [isMusicPlaying,setIsMusicPlaying] = useState(false)
+  const [isMusicPlaying,setIsMusicPlaying] = useState(true)
+  const [pokedex,setPokedex] = useState([])
 
   useEffect(() => {
     // determines how long the loading screen is shown for
@@ -22,9 +25,11 @@ function App() {
     setTimeout(() => {
       setIsLoadingOver(true)
     }, 1500);
+    playBackgroundMusic()
   }, []);
 
   const goToStartPage = () => {
+    playBackgroundMusic();
     setDifficultyLevel([]);
     charactersToPlayWith.forEach(character =>{
       character.clicked = false;
@@ -34,6 +39,9 @@ function App() {
     if (isSoundPlaying) {
       const audio = new Audio()
     }
+  }
+  const playFlip = () => {
+    console.log('playing pokemon capture sound')
   }
   const getCharactersToPlayWith = () => {
     // create array of characters to play with based on the difficulty selected
@@ -48,6 +56,40 @@ function App() {
     setCharactersToPlayWith(randomCharacters);
     shuffle(randomCharacters)
   }
+  const getPokedex = () => {
+    // use random number to get pokemon info
+    // use state to store object in array of pokemon
+    // loop through repeating for difficulty level chosen
+    let idNumber = Math.floor(Math.random()*211)
+    getInfo(idNumber)
+  }
+  async function getInfo(idNumber) {
+    fetch(`https://pokeapi.co/api/v2/pokedex/${idNumber}/`)
+      .then(function(response) {
+        return response.json()
+      })
+      .then(function(response) {
+        let id = response.id
+        let name = response.name
+        let cry = response.cries.latest
+        let src = response.sprites.front_default
+        setPokedex([
+          ...pokedex,
+          {
+            id:id,
+            name:name,
+            cry:cry,
+            src:src,
+            clicked:false,
+          }
+        ])
+        .catch(function(err) {
+          alert(err)
+        })
+      })
+  }
+  getInfo(50)
+  console.table(pokedex)
   const shuffle = (array) => {
     // randomize the order of the character array
     let shuffledCharacters = [];
@@ -81,6 +123,10 @@ function App() {
       return ''
     }
   }
+  const playBackgroundMusic = () => {
+    let audio = new Audio(backgroundMusic)
+    audio.play()
+  }
 
   return (
     <>
@@ -108,18 +154,21 @@ function App() {
             isSoundPlaying={isSoundPlaying}
             isMusicPlaying={isMusicPlaying}
             playClick={playClick}
+            playFlip={playFlip}
           />}
-          <Footer
-            /* isMusicPlaying={isMusicPlaying}
+          {/* <Footer
+            isMusicPlaying={isMusicPlaying}
             setIsMusicPlaying={setIsMusicPlaying}
             isSoundPlaying={isSoundPlaying}
             setIsSoundPlaying={setIsSoundPlaying}
-            playClick={playClick} */
-          />
+            playClick={playClick} 
+          /> */}
       </>
       )}
+      <Sound />
     </>
   )
+  
 }
 
 export default App
