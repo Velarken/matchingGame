@@ -9,6 +9,7 @@ export function Card({
     handleCardClick
 }) {
     const [characterSound,setCharacterSound] = useState(null)
+    const [characterSprite,setCharacterSprite] = useState(null)
     useEffect(() => {
         // return the cry of the selected pokemon
         fetch(`https://pokeapi.co/api/v2/pokemon/${character.name}/`)
@@ -17,11 +18,12 @@ export function Card({
             })
             .then(function(response) {
                 setCharacterSound(response.cries.latest)
+                setCharacterSprite(response.sprites.front_default)
             })
             .catch(function(err) {
                 alert(err)
             })
-    }, [characterSound])
+    }, [characterSound,characterSprite])
     function handlePlaySound() {
         let audio = new Audio(characterSound)
         audio.play();
@@ -29,10 +31,10 @@ export function Card({
     return (
         <div
             className={isFlipped ? 'card flipped' : 'card'}
-            onClick={(e) => {
+            onClick={() => {
                 handlePlaySound() // play pokemon cry when flipped
                 handleCardClick(character)
-                console.log(character.src)
+                console.log('card clicked')
                 }}>
             <Tilt
                 glareEnable={true}
@@ -41,18 +43,21 @@ export function Card({
                 glarePosition='bottom'
                 glareBorderRadius='20px'
                 className='tilt'>
+                    {!isFlipped ?
                     <div className="cardFace">
                         <div
                             className='characterDisplay'
                             style={{
-                                backgroundImage: `url(${img})`,
+                                backgroundImage: `url(${characterSprite /* img */})`,
                                 backgroundPosition:'center',
                                 backgroundSize:'cover',
                                 backgroundRepeat:'no-repeat'
                                 }} />
                         <div className="name">{character.name.charAt(0).toUpperCase() +character.name.slice(1)}</div>
                     </div>
+                    :
                     <div className="cardBack"></div>
+                    }
             </Tilt>
         </div>
     )
