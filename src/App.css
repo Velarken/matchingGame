@@ -1,16 +1,4 @@
-.app {
-  display:flex;
-  flex-direction: column;
-  width:100vw;
+* {
   align-items: center;
-  justify-content: center;
-}
-.gameboard {
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-gap: 0.25fr;
-  width:80vw;
-  height:80vh;
   justify-content: center;
 }

@@ -1,4 +1,6 @@
 .cardSection {
     display:flex;
+    flex-direction: row;
+    align-self: center;
     width:90vw;
 }
