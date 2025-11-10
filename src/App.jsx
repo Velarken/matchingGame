@@ -1,10 +1,13 @@
 import { useState,useEffect } from 'react'
 import './App.css'
-import {StartPage} from './pages/StartPage.jsx'
-import {GameboardPage} from './pages/GameboardPage'
-import {Footer} from './components/Footer.jsx'
-import {LoadingPage} from './pages/LoadingPage.jsx'
+//import {StartPage} from './pages/StartPage.jsx'
+//import {GameboardPage} from './pages/GameboardPage'
+// import {Footer} from './components/Footer.jsx'
+//import {LoadingPage} from './pages/LoadingPage.jsx'
 import characters from './characters.js'
+//import Sound from './components/Sound.jsx'
+//import backgroundMusic from './assets/backgroundMusic.mp3'
+import MatchGamePage from './pages/MatchGamePage.jsx'
 
 function App() {
   const [isLoadingOver,setIsLoadingOver] = useState(false);
@@ -14,17 +17,20 @@ function App() {
   const [score,setScore] = useState(0);
   const [bestScore,setBestScore] = useState(0);
   const [isSoundPlaying,setIsSoundPlaying] = useState(true)
-  const [isMusicPlaying,setIsMusicPlaying] = useState(false)
+  const [isMusicPlaying,setIsMusicPlaying] = useState(true)
+  const [pokedex,setPokedex] = useState([])
 
-  useEffect(() => {
+  /* useEffect(() => {
     // determines how long the loading screen is shown for
     // when timeout ends, setIsLoadingOver state is updated, and game menu is shown
     setTimeout(() => {
       setIsLoadingOver(true)
     }, 1500);
-  }, []);
+    playBackgroundMusic()
+  }, []); */
 
   const goToStartPage = () => {
+    playBackgroundMusic();
     setDifficultyLevel([]);
     charactersToPlayWith.forEach(character =>{
       character.clicked = false;
@@ -34,6 +40,9 @@ function App() {
     if (isSoundPlaying) {
       const audio = new Audio()
     }
+  }
+  const playFlip = () => {
+    console.log('playing pokemon capture sound')
   }
   const getCharactersToPlayWith = () => {
     // create array of characters to play with based on the difficulty selected
@@ -47,6 +56,12 @@ function App() {
     // randomize chosen characters
     setCharactersToPlayWith(randomCharacters);
     shuffle(randomCharacters)
+  }
+  const getPokedex = () => {
+    // use random number to get pokemon info
+    // use state to store object in array of pokemon
+    // loop through repeating for difficulty level chosen
+
   }
   const shuffle = (array) => {
     // randomize the order of the character array
@@ -81,10 +96,17 @@ function App() {
       return ''
     }
   }
+  const playBackgroundMusic = () => {
+    let audio = new Audio(backgroundMusic)
+    audio.play()
+  }
 
   return (
     <>
-    {!isLoadingOver ? <LoadingPage />
+      <MatchGamePage 
+        difficultyLevel={10}
+      />
+    {/* {!isLoadingOver ? <LoadingPage />
     : (
       <>
       {!difficultyLevel[0]
@@ -108,18 +130,21 @@ function App() {
             isSoundPlaying={isSoundPlaying}
             isMusicPlaying={isMusicPlaying}
             playClick={playClick}
+            playFlip={playFlip}
           />}
           <Footer
-            /* isMusicPlaying={isMusicPlaying}
+            isMusicPlaying={isMusicPlaying}
             setIsMusicPlaying={setIsMusicPlaying}
             isSoundPlaying={isSoundPlaying}
             setIsSoundPlaying={setIsSoundPlaying}
-            playClick={playClick} */
-          />
+            playClick={playClick} 
+          />  
       </>
       )}
+      <Sound /> */}
     </>
   )
+  
 }
 
 export default App
