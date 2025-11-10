@@ -2,3 +2,15 @@
   align-items: center;
   justify-content: center;
 }
+.page {
+  display:flex;
+  flex-direction: column;
+  width:100vw;
+  height:100vh;
+}
+.game {
+  display:flex;
+  flex-direction: column;
+  width:95vw;
+  height:100vh;
+}

@@ -7,6 +7,7 @@ import {LoadingPage} from './pages/LoadingPage.jsx'
 import characters from './characters.js'
 import Sound from './components/Sound.jsx'
 import backgroundMusic from './assets/backgroundMusic.mp3'
+import backgroundImage from './assets/background.jpg'
 
 function App() {
   const [isLoadingOver,setIsLoadingOver] = useState(false);
@@ -129,10 +130,14 @@ function App() {
   }
 
   return (
-    <>
+    <div className='page' style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundPosition:'center',
+      backgroundSize:'cover',
+      backgroundRepeat:'no-repeat'}}>
     {!isLoadingOver ? <LoadingPage />
     : (
-      <>
+      <div className='game'>
       {!difficultyLevel[0]
         ? <StartPage
             setDifficultyLevel={setDifficultyLevel}
@@ -163,10 +168,10 @@ function App() {
             setIsSoundPlaying={setIsSoundPlaying}
             playClick={playClick} 
           /> */}
-      </>
+      </div>
       )}
       <Sound />
-    </>
+    </div>
   )
   
 }

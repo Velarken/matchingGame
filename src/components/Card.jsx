@@ -1,6 +1,8 @@
 import Tilt from 'react-parallax-tilt'
 import '../Card.css'
 import { useState,useEffect } from 'react'
+import { radialGradient } from 'motion/react-client'
+import cardTexture from '../assets/cardBackground.jpg'
 
 export function Card({
     character,
@@ -44,11 +46,17 @@ export function Card({
                 glareBorderRadius='20px'
                 className='tilt'>
                     {!isFlipped ?
-                    <div className="cardFace">
+                    <div className="cardFace"
+                        style={{
+                            backgroundColor:'black',
+                            border:'2px,solid,blue',
+                            borderRadius:'12px',
+                        }}
+                    >
                         <div
                             className='characterDisplay'
                             style={{
-                                backgroundImage: `url(${characterSprite /* img */})`,
+                                backgroundImage: `url(${characterSprite}), radial-gradient(#FFFFFF, #0F52BA)`,
                                 backgroundPosition:'center',
                                 backgroundSize:'cover',
                                 backgroundRepeat:'no-repeat'
